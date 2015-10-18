@@ -1,50 +1,30 @@
-function UniverseCanvas($, massControl) {
-	var canvasOffset =  $('#universe').offset();
-	var velocitySettingStrength = 0.01;
-	var renderIntervalInMilliseconds = 20;	
-	var drawingContext = document.getElementById("universe").getContext("2d");
-	var universeCanvas = {
-		renderUniverse: function() {
+function UniverseCanvas(jquerySelectionForUniverseCanvas, drawingContext) {
+	return {
+		renderUniverse: function(universe) {
 			drawingContext.clearRect(0, 0, 5000, 5000);
-			universe.particles().forEach(function(particle) {
-				universeCanvas.renderParticle(particle);
-			});
+			universe.particles().forEach(this.renderParticle.bind(this));
 		},
 		renderParticle: function(particle) {
+			//TODO: Only render particle if it is within viewable area
 			var radius = particle.mass() / 2;
 			var position = particle.position();
 			drawingContext.fillStyle = '#FFFFFF';
 			drawingContext.beginPath();
 			drawingContext.arc(position.x(), position.y(), radius, 0, 2 * Math.PI);
 			drawingContext.fill();
-			drawingContext.stroke();
 		},
-		onMouseDown: function(mousePressEvent) {
-			$('#universe').bind('mouseleave mouseup', function(mouseReleaseEvent) {	
-				var canvasPosition = Vector(canvasOffset.left, canvasOffset.top);
-				var mousePressPosition = Vector(mousePressEvent.pageX, mousePressEvent.pageY).minus(canvasPosition);
-				var mouseReleasePosition = Vector(mouseReleaseEvent.pageX, mouseReleaseEvent.pageY).minus(canvasPosition);
-				var velocity = mouseReleasePosition.minus(mousePressPosition).timesScalar(velocitySettingStrength);
-				var particle = Particle(mousePressPosition, velocity, massControl.getMass());
-				universe.particles().push(particle);
-				universeCanvas.renderParticle(particle);
-				$('#universe').unbind('mouseleave mouseup');
-			});
+		onMouseDown: function(handler) {
+			jquerySelectionForUniverseCanvas.mousedown(handler);
 		},
-		updateAndRenderUniverse: function() {
-			universeCanvas.renderUniverse();
-			universe = universe.evolve();
+		onMouseUp: function(handler) {
+			jquerySelectionForUniverseCanvas.bind('mouseleave mouseup', handler);
 		},
-		startEvolution: function() {
-			$('#startStopToggle').text('Stop');
-			interval = setInterval(function() { universeCanvas.updateAndRenderUniverse(); }, renderIntervalInMilliseconds);
+		removeMouseUpHandlers: function() {
+			jquerySelectionForUniverseCanvas.unbind('mouseleave mouseup');
 		},
-		stopEvolution: function() {	
-			$('#startStopToggle').text('Start');
-			clearInterval(interval);
-			interval = undefined;
+		position: function() {
+			var canvasOffset = jquerySelectionForUniverseCanvas.offset();
+			return Vector(canvasOffset.left, canvasOffset.top);
 		}
 	}
-	$('#universe').mousedown(universeCanvas.onMouseDown);
-	return universeCanvas;
 }

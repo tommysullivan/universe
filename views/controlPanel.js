@@ -1,14 +1,13 @@
-function ControlPanel($, universeCanvas) {
-	var cp = {
-		reset: function() {
-			universe.reset();
-			universeCanvas.renderUniverse();
+function ControlPanel(jquerySelectionForResetButton, jquerySelectionForStartStopToggle) {
+	return {
+		onResetClick: function(handler) {
+			jquerySelectionForResetButton.click(handler);
 		},
-		startStopToggle: function() {
-			interval ? universeCanvas.stopEvolution() : universeCanvas.startEvolution();
+		onStartStopToggleClick: function(handler) {
+			jquerySelectionForStartStopToggle.click(handler);
+		},
+		isStarted: function(isStarted) {
+			jquerySelectionForStartStopToggle.text(isStarted ? 'Stop' : 'Start');
 		}
 	}
-	$('#resetButton').click(cp.reset);
-	$('#startStopToggle').click(cp.startStopToggle);
-	return cp;
 }

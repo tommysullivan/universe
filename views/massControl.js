@@ -1,10 +1,10 @@
-function MassControl($) {
+function MassControl(jquerySelectionForMassTextInput) {
 	return {
 		getMass: function() {
-			return parseInt($('#mass').val());
+			return parseInt(jquerySelectionForMassTextInput.val());
 		},
 		setMass: function(newMass) {
-			$('#mass').val(newMass);
+			jquerySelectionForMassTextInput.val(newMass);
 		}
 	}
 }

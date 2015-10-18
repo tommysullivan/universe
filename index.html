@@ -1,24 +1,46 @@
 <html>
 	<head>
+		<title>Tommy's Universe</title>
 	    <script src="jquery.js"></script>
+	    <script src="configuration.js"></script>
 	    <script src="utils/array.js"></script>
 	    <script src="physics/vector.js"></script>
 	    <script src="physics/particle.js"></script>
 	    <script src="physics/universe.js"></script>
 	    <script src="views/massControl.js"></script>
 	    <script src="views/universeCanvas.js"></script>
-	    <script src="views/keyboardShortcuts.js"></script>
 	    <script src="views/controlPanel.js"></script>
+	    <script src="controllers/application.js"></script>
 	    <script type="text/javascript">
-			var interval;
-			var universe;
-			
 	    	$(function() {
-	    		universe = Universe([]);
-	    		var massControl = MassControl($);
-	    		var universeCanvas = UniverseCanvas($, massControl);
-	    		var controlPanel = ControlPanel($, universeCanvas);
-	    		KeyboardShortcuts($, controlPanel, massControl);
+	    		var universe = Universe([]);
+	    		var jquerySelectionForMassTextInput = $('#mass');
+	    		var jquerySelectionForResetButton = $('#resetButton');
+	    		var jquerySelectionForStartStopToggle = $('#startStopToggle');
+	    		var jquerySelectionForUniverseCanvas = $('#universe');
+	    		var jquerySelectionForKeyboard = $('body')
+	    		var jquerySelectionForStartStopToggle = $('#startStopToggle');
+				
+				var renderIntervalInMilliseconds = 20;	
+				var gravitationalConstant = 10;
+				var smallChange = 3;
+				var bigChange = 20;	
+				var velocitySettingStrength = 0.01;
+
+				var configuration = Configuration(
+					smallChange, bigChange, velocitySettingStrength, renderIntervalInMilliseconds, gravitationalConstant
+				);
+
+				var drawingContext = document.getElementById("universe").getContext("2d");
+	    		var massControl = MassControl(jquerySelectionForMassTextInput);
+	    		var controlPanel = ControlPanel(jquerySelectionForResetButton, jquerySelectionForStartStopToggle);
+	    		var universeCanvas = UniverseCanvas(jquerySelectionForUniverseCanvas, drawingContext);
+	    		
+	    		var controller = Application(
+	    			jquerySelectionForKeyboard, universeCanvas, controlPanel, universe, massControl, configuration
+	    		);
+
+	    		controller.activate();
 	    	});
 	    </script>
 	    <style>
@@ -37,6 +59,8 @@
 				<strong>(s)</strong> start / stop
 			 	<strong>(r)</strong> reset
 			 	<strong>(-/+)</strong> change mass (hold shift for larger increment)
+			 	<strong>(t)</strong> render one timestep
+			 	<strong>(l)</strong> log universe state to console
 		</div>
 		<canvas id="universe" style="background-color: #002222;" width="2000" height="1000"></canvas>
 	</body>

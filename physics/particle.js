@@ -1,5 +1,4 @@
-function Particle(position, velocity, mass) {
-	var gravitationalConstant = 10;
+function Particle(position, velocity, mass, gravitationalConstant) {
 	return {
 		mass: function() {
 			return mass;
@@ -11,22 +10,17 @@ function Particle(position, velocity, mass) {
 			return velocity;
 		},
 		evolve: function(otherParticles) {
-			var _this = this;
-			var gravitationalForceVectorsDueToOtherParticles = otherParticles.map(function(otherParticle) {
-				return _this.gravitationalForceDueTo(otherParticle);
-			});
-
+			var gravitationalForceVectorsDueToOtherParticles = otherParticles.map(this.gravitationalForceDueTo.bind(this));
 			var sumGravitationalForceVector = gravitationalForceVectorsDueToOtherParticles.fold(
 				Vector(0, 0),
 				function(a, b) {
 					return a.plus(b);
 				}
 			);
-
 			var newPosition = position.plus(velocity);
 			var accelerationDueToGravity = sumGravitationalForceVector.divideByScalar(mass);
 			var newVelocity = velocity.plus(accelerationDueToGravity);
-			return Particle(newPosition, newVelocity, mass);
+			return Particle(newPosition, newVelocity, mass, gravitationalConstant);
 		},
 		gravitationalForceDueTo: function(otherParticle) {
 			var distance = position.distanceTo(otherParticle.position());
