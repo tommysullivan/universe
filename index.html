@@ -1,0 +1,43 @@
+<html>
+	<head>
+	    <script src="jquery.js"></script>
+	    <script src="utils/array.js"></script>
+	    <script src="physics/vector.js"></script>
+	    <script src="physics/particle.js"></script>
+	    <script src="physics/universe.js"></script>
+	    <script src="views/massControl.js"></script>
+	    <script src="views/universeCanvas.js"></script>
+	    <script src="views/keyboardShortcuts.js"></script>
+	    <script src="views/controlPanel.js"></script>
+	    <script type="text/javascript">
+			var interval;
+			var universe;
+			
+	    	$(function() {
+	    		universe = Universe([]);
+	    		var massControl = MassControl($);
+	    		var universeCanvas = UniverseCanvas($, massControl);
+	    		var controlPanel = ControlPanel($, universeCanvas);
+	    		KeyboardShortcuts($, controlPanel, massControl);
+	    	});
+	    </script>
+	    <style>
+	    	.buttons {
+	    		font-size: 16px;
+	    		font-family: Arial;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div id="controls">
+			<button id="startStopToggle" class="buttons">Start</button>	
+			<button id="resetButton" class="buttons">Reset</button>	
+			<label>mass: <input type="text" id="mass" value="10" style="width: 25px"/></label>
+			<strong>shortcuts:</strong>
+				<strong>(s)</strong> start / stop
+			 	<strong>(r)</strong> reset
+			 	<strong>(-/+)</strong> change mass (hold shift for larger increment)
+		</div>
+		<canvas id="universe" style="background-color: #002222;" width="2000" height="1000"></canvas>
+	</body>
+</html>
