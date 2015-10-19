@@ -2,7 +2,7 @@
 	<head>
 		<title>Tommy's Universe</title>
 	    <script src="jquery.js"></script>
-	    <script src="configuration.js"></script>
+	    <script src="configuration/configuration.js"></script>
 	    <script src="utils/array.js"></script>
 	    <script src="physics/vector.js"></script>
 	    <script src="physics/particle.js"></script>
@@ -13,7 +13,8 @@
 	    <script src="controllers/application.js"></script>
 	    <script type="text/javascript">
 	    	$(function() {
-	    		var universe = Universe([]);
+	    		//TODO: Accomplish Instantiation with IOC Container / DI Framework
+	    		//TODO: Move literals into configuration
 	    		var jquerySelectionForMassTextInput = $('#mass');
 	    		var jquerySelectionForResetButton = $('#resetButton');
 	    		var jquerySelectionForStartStopToggle = $('#startStopToggle');
@@ -35,7 +36,7 @@
 	    		var massControl = MassControl(jquerySelectionForMassTextInput);
 	    		var controlPanel = ControlPanel(jquerySelectionForResetButton, jquerySelectionForStartStopToggle);
 	    		var universeCanvas = UniverseCanvas(jquerySelectionForUniverseCanvas, drawingContext);
-	    		
+	    		var universe = Universe([]);
 	    		var controller = Application(
 	    			jquerySelectionForKeyboard, universeCanvas, controlPanel, universe, massControl, configuration
 	    		);

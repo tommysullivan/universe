@@ -1,0 +1,36 @@
+{
+   "version": "0.0.1-SNAPSHOT",
+   "configuration": {
+      "smallChange": 3,
+      "bigChange": 20,
+      "velocitySettingStrength": 0.01,
+      "renderIntervalInMilliseconds": 20,
+      "gravitationalConstant": 10
+   },
+   "particles": [
+      {
+         "id": "earth",
+         "position": {
+            "x": 800,
+            "y": 500
+         },
+         "velocity": {
+            "x": 0,
+            "y": 0
+         },
+         "mass": 597.00
+      },
+      {
+         "id": "moon",
+         "position": {
+            "x": 250,
+            "y": 500
+         },
+         "velocity": {
+            "x": 0,
+            "y": -1
+         },
+         "mass": 7.34
+      }
+   ]
+}

@@ -34,7 +34,7 @@ function Application(jquerySelectionForKeyboard, universeCanvas, controlPanel, u
 			});
 		},
 		export: function() {
-			var exportJSONString = JSON.stringify(this.getExportJSON());
+			var exportJSONString = JSON.stringify(this.getExportJSON(), null, 3);
 			window.prompt("Copy to clipboard: Ctrl+C, Enter", exportJSONString);
 		},
 		import: function() {
@@ -104,7 +104,7 @@ function Application(jquerySelectionForKeyboard, universeCanvas, controlPanel, u
 				case 't': this.updateAndRenderUniverse(); break;
 				case 'l': 
 					var exportJSON = this.getExportJSON();
-					console.log(JSON.stringify(exportJSON)); 
+					console.log(JSON.stringify(exportJSON, null, 3)); 
 					console.log(exportJSON);
 					break;
 				case 'x': this.export(); break;

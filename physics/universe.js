@@ -9,8 +9,7 @@ function Universe(particles) {
 			}));
 		},
 		reset: function() {
-			$('#universe').empty();
-			particles = []
+			particles.length = 0;
 		},
 		toString: function() {
 			return 'Universe(' + particles.map(function(p, i) {
