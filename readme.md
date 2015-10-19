@@ -1,5 +1,5 @@
 Tommy's Universe
-----------------
+================
 
 This is just a side project to build my own physics engine in order to improve my understanding 
 of physics! I do not want to fake anything out at the macroscopic level. I want to implement only
@@ -7,7 +7,11 @@ the minimal standard model that I can and then seek ways over my lifetime to imp
 performance until the engine can emulate something huge and meaningful at a macro level, such as biology
 or a virtual classical / quantum computing device expressed as a universe configuration.
 
-# Coming Features
+## Preview
+
+http://htmlpreview.github.io/?https://github.com/tommysullivan/universe/blob/master/index.html
+
+## Coming Features
 
 1. New Phyics Capabilities
 	1. 3D Physics
@@ -24,7 +28,7 @@ or a virtual classical / quantum computing device expressed as a universe config
 		3. preview in the UI on hover
 		4. Google Drive
 		5. Search / Discover Shared by others, including software maker
-		6. Ability to choose which configurations to apply
+		6. Ability to choose which configurations to apply (including editor configs)
 		7. Ability to merge configurations together
 	2. Redo / Undo / Histogram
 	3. Inline configuration editor (requires paused state)
@@ -57,7 +61,7 @@ or a virtual classical / quantum computing device expressed as a universe config
 		4. "Follow" a particle through the space
 
 
-# Technical Improvements
+## Technical Improvements
 
 1. Eliminate state (interval, universe)
 2. Implement Import / Export as part of Instantiation / IOC Container Strategy
