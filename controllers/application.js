@@ -33,12 +33,59 @@ function Application(jquerySelectionForKeyboard, universeCanvas, controlPanel, u
 				_this.createParticleWithVelocityBasedOnMouseDistance(mousePressEvent, mouseReleaseEvent);
 			});
 		},
+		export: function() {
+			var exportJSONString = JSON.stringify(this.getExportJSON());
+			window.prompt("Copy to clipboard: Ctrl+C, Enter", exportJSONString);
+		},
+		import: function() {
+			var importJSONString = window.prompt("Import: Ctrl+V, Enter", '[paste your configuration here]');
+			try {
+				var importJSON = JSON.parse(importJSONString);
+				var particleJSONs = importJSON.particles;
+				var particles = particleJSONs.map(function(particleJSON) {
+					var position = Vector(particleJSON.position.x, particleJSON.position.y);
+					var velocity = Vector(particleJSON.velocity.x, particleJSON.velocity.y);
+					return Particle(position, velocity, particleJSON.mass, configuration);
+				});
+				universe = Universe(particles);
+				this.updateAndRenderUniverse();
+			}
+			catch(e) {
+				alert('There was a problem importing the configuration you specified: '+e.toString());
+			}
+		},
+		getExportJSON: function() {
+			return {
+				version: '0.0.1-SNAPSHOT',
+				configuration: {
+					smallChange: configuration.smallChange(),
+					bigChange: configuration.bigChange(),
+					velocitySettingStrength: configuration.velocitySettingStrength(),
+					renderIntervalInMilliseconds: configuration.renderIntervalInMilliseconds(),
+					gravitationalConstant: configuration.gravitationalConstant()
+				},
+				particles: universe.particles().map(function(p) {
+					return {
+						position: {
+							x: p.position().x(),
+							y: p.position().y()
+						},
+						velocity: {
+							x: p.velocity().x(),
+							y: p.velocity().y()
+						},
+						mass: p.mass()
+					}
+				})
+			};
+		},
 		createParticleWithVelocityBasedOnMouseDistance: function(mousePressEvent, mouseReleaseEvent) {	
+			//TODO: Move this coordinate transformation stuff into the view.
 			var canvasPosition = universeCanvas.position();
 			var mousePressPosition = Vector(mousePressEvent.pageX, mousePressEvent.pageY).minus(canvasPosition);
 			var mouseReleasePosition = Vector(mouseReleaseEvent.pageX, mouseReleaseEvent.pageY).minus(canvasPosition);
 			var velocity = mouseReleasePosition.minus(mousePressPosition).timesScalar(configuration.velocitySettingStrength());
-			var particle = Particle(mousePressPosition, velocity, massControl.getMass(), configuration.gravitationalConstant());
+			var particle = Particle(mousePressPosition, velocity, massControl.getMass(), configuration);
 			universe.particles().push(particle);
 			universeCanvas.renderParticle(particle);
 			universeCanvas.removeMouseUpHandlers();
@@ -55,7 +102,13 @@ function Application(jquerySelectionForKeyboard, universeCanvas, controlPanel, u
 				case '+': this.changeMass(configuration.bigChange()); break;
 				case 'r': this.reset(); break;
 				case 't': this.updateAndRenderUniverse(); break;
-				case 'l': console.log(universe.toString()); break;
+				case 'l': 
+					var exportJSON = this.getExportJSON();
+					console.log(JSON.stringify(exportJSON)); 
+					console.log(exportJSON);
+					break;
+				case 'x': this.export(); break;
+				case 'i': this.import(); break;
 			}
 		}
 	}
