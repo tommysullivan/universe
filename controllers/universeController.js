@@ -26,6 +26,9 @@ function UniverseController(universeView, universe, particleRenderer, configurat
                 var velocity = endPosition.minus(startPosition).times(configuration.velocitySettingStrength());
                 _this.addParticle(startPosition, velocity, massControl.getMass());
             });
+            window.addEventListener("resize", function() {
+                universeView.render(universe);
+            });
         },
         addParticle: function(position, velocity, mass) {
             var particle = Particle(
