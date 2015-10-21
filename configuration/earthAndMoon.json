@@ -1,12 +1,4 @@
 {
-   "version": "0.0.1-SNAPSHOT",
-   "configuration": {
-      "smallChange": 3,
-      "bigChange": 20,
-      "velocitySettingStrength": 0.01,
-      "renderIntervalInMilliseconds": 20,
-      "gravitationalConstant": 10
-   },
    "particles": [
       {
          "id": "earth",

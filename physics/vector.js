@@ -3,11 +3,11 @@ function Vector(x, y) {
 		magnitude: function() {
 			return Math.sqrt(x * x + y * y);
 		},
-		timesScalar: function(scalar) {
+		times: function(scalar) {
 			return Vector(scalar * x, scalar * y);
 		},
-		divideByScalar: function(scalar) {
-			return this.timesScalar(1 / scalar);
+		divide: function(scalar) {
+			return this.times(1 / scalar);
 		},
 		x: function() {
 			return x;
@@ -16,7 +16,7 @@ function Vector(x, y) {
 			return y;
 		},
 		minus: function(otherVector) {
-			return this.plus(otherVector.timesScalar(-1));
+			return this.plus(otherVector.times(-1));
 		},
 		plus: function(otherVector) {
 			return Vector(x + otherVector.x(), y + otherVector.y());
@@ -25,7 +25,7 @@ function Vector(x, y) {
 			return this.minus(somePosition).magnitude();
 		},
 		unitVectorPointingAt: function(somePosition) {
-			return this.minus(somePosition).divideByScalar(this.distanceTo(somePosition));
+			return this.minus(somePosition).divide(this.distanceTo(somePosition));
 		},
 		toString: function() {
 			return 'Vector('+x+','+y+')';

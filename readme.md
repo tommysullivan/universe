@@ -66,6 +66,6 @@ http://htmlpreview.github.io/?https://github.com/tommysullivan/universe/blob/mas
 1. Eliminate state (interval, universe)
 2. Implement Import / Export as part of Instantiation / IOC Container Strategy
 3. Do not draw anything that is outside the viewport
-4. Decouple position in model from position on screen
-5. Decouple mass size depiction from width within model
+4. ~~Decouple position in model from position on screen~~
+5. ~~Decouple mass size depiction from width within model~~
 6. Decouple physics timesteps from rendering intervals

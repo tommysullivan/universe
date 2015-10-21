@@ -8,63 +8,97 @@
 	    <script src="physics/particle.js"></script>
 	    <script src="physics/universe.js"></script>
 	    <script src="views/massControl.js"></script>
-	    <script src="views/universeCanvas.js"></script>
-	    <script src="views/controlPanel.js"></script>
-	    <script src="controllers/application.js"></script>
+	    <script src="views/universeView.js"></script>
+	    <script src="views/toolbarView.js"></script>
+	    <script src="views/canvas.js"></script>
+	    <script src="views/particleRenderer.js"></script>
+	    <script src="views/keyboard.js"></script>
+	    <script src="views/logger.js"></script>
+	    <script src="controllers/applicationController.js"></script>
+	    <script src="controllers/universeController.js"></script>
+	    <script src="controllers/toolbarController.js"></script>
+		<script src="controllers/importExportController.js"></script>
+		<script src="physics.js"></script>
 	    <script type="text/javascript">
+			var configuration = Configuration({
+				"backgroundURL": 'http://weknowyourdreams.com/images/stars/stars-02.jpg',
+				"renderIntervalInMilliseconds": 20,
+				"gravitationalConstant": 10,
+				"smallChange": 3,
+				"bigChange": 20,
+				"velocitySettingStrength": 0.01,
+				"massDensityFactor": 1,
+				"modelToViewSpaceFactor": 1,
+				"particleColor": "#FFFFFF",
+				"tinyParticleColor": "#333333",
+				"massTextInputSelector": "#mass",
+				"resetButtonSelector": "#resetButton",
+				"startStopToggleSelector": "#startStopToggle",
+				"universeCanvasSelector": "#universe",
+				"timestepButtonSelector": "#timestepButton",
+				"logButtonSelector": "#logButton",
+				"exportButtonSelector": "#exportButton",
+				"importButtonSelector": "#importButton",
+				"keyboardShortcutSelector": "body",
+				"universeContainerJQuerySelection": "#universeContainer"
+			});
 	    	$(function() {
-	    		//TODO: Accomplish Instantiation with IOC Container / DI Framework
-	    		//TODO: Move literals into configuration
-	    		var jquerySelectionForMassTextInput = $('#mass');
-	    		var jquerySelectionForResetButton = $('#resetButton');
-	    		var jquerySelectionForStartStopToggle = $('#startStopToggle');
-	    		var jquerySelectionForUniverseCanvas = $('#universe');
-	    		var jquerySelectionForKeyboard = $('body')
-	    		var jquerySelectionForStartStopToggle = $('#startStopToggle');
-				
-				var renderIntervalInMilliseconds = 20;	
-				var gravitationalConstant = 10;
-				var smallChange = 3;
-				var bigChange = 20;	
-				var velocitySettingStrength = 0.01;
-
-				var configuration = Configuration(
-					smallChange, bigChange, velocitySettingStrength, renderIntervalInMilliseconds, gravitationalConstant
-				);
-
-				var drawingContext = document.getElementById("universe").getContext("2d");
-	    		var massControl = MassControl(jquerySelectionForMassTextInput);
-	    		var controlPanel = ControlPanel(jquerySelectionForResetButton, jquerySelectionForStartStopToggle);
-	    		var universeCanvas = UniverseCanvas(jquerySelectionForUniverseCanvas, drawingContext);
-	    		var universe = Universe([]);
-	    		var controller = Application(
-	    			jquerySelectionForKeyboard, universeCanvas, controlPanel, universe, massControl, configuration
-	    		);
-
-	    		controller.activate();
-	    	});
+				Physics($, configuration).startApplication();
+			});
 	    </script>
 	    <style>
-	    	.buttons {
-	    		font-size: 16px;
-	    		font-family: Arial;
+			body {
+				font-size: 16px;
+			}
+	    	button {
+				font-size: 16px;
+				padding: 10px;
+				margin: 5px;
 	    	}
+			#controls {
+				padding: 5px;
+				background-color: gray
+			}
+			#universe {
+				cursor: crosshair
+			}
+			#application {
+				padding: 15px;
+				background-color: lightgray;
+				border-radius: 10px;
+			}
+			#title {
+				margin-bottom: 5px;
+				font-family: fantasy;
+				font-size: 30px;
+			}
+			input {
+				width: 30px;
+			}
 	    </style>
 	</head>
 	<body>
-		<div id="controls">
-			<button id="startStopToggle" class="buttons">Start</button>	
-			<button id="resetButton" class="buttons">Reset</button>	
-			<label>mass: <input type="text" id="mass" value="10" style="width: 25px"/></label>
-			<strong>shortcuts:</strong>
-				<strong>(s)</strong> start / stop
-			 	<strong>(r)</strong> reset
-			 	<strong>(-/+)</strong> change mass (hold shift for larger increment)
-			 	<strong>(t)</strong> render one timestep
-			 	<strong>(l)</strong> log universe state to console
-			 	<strong>(x)</strong> e(x)port state
-			 	<strong>(i)</strong> import state
+		<div id="application">
+			<div id="title">Tommy's Universe Emulator</div>
+			<div id="controls">
+				<button id="startStopToggle">(S)tart</button>
+				<button id="resetButton">(R)eset</button>
+				<button id="timestepButton">(T)imestep</button>
+				<button id="logButton">(L)og State</button>
+				<button id="exportButton">e(X)port</button>
+				<button id="importButton">(I)mport</button>
+
+				<label>mass: <input type="text" id="mass" value="10" /></label>
+				<label>velocity: <input type="text" id="velocity" value="10" /></label>
+				<label>fps: <input type="text" id="fps" value="10" /></label>
+				<label>gravity: <input type="text" id="gravity" value="10" /></label>
+				<label>massDensity: <input type="text" id="massDensity" value="10" /></label>
+				<strong>shortcuts:</strong>
+					<strong>(-/+)</strong> change mass (hold shift for larger increment)
+			</div>
+			<div id="universeContainer" width="100%", height="1000" style="background-color: black; padding: 20px;">
+				<canvas id="universe" style="background-color: #002222;" width="2000" height="1000"></canvas>
+			</div>
 		</div>
-		<canvas id="universe" style="background-color: #002222;" width="2000" height="1000"></canvas>
 	</body>
 </html>
