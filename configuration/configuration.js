@@ -29,6 +29,8 @@ Configuration = function(configurationJSON) {
 		timestepButtonSelector: jsonAccessorMethod('timestepButtonSelector'),
 		logButtonSelector: jsonAccessorMethod('logButtonSelector'),
 		exportButtonSelector: jsonAccessorMethod('exportButtonSelector'),
-		importButtonSelector: jsonAccessorMethod('importButtonSelector')
+		importButtonSelector: jsonAccessorMethod('importButtonSelector'),
+		autoStart: jsonAccessorMethod('autoStart'),
+		initialParticles: jsonAccessorMethod('initialParticles')
 	}
 }

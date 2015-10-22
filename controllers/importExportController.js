@@ -4,21 +4,24 @@ function ImportExportController(keyboard, logger, universe, universeController, 
             var exportJSONString = JSON.stringify(this.getExportJSON(), null, 3);
             window.prompt("Copy to clipboard: Ctrl+C, Enter", exportJSONString);
         },
-        import: function() {
-            var importJSONString = window.prompt("Import: Ctrl+V, Enter", '[paste your configuration here]');
-            try {
-                var importJSON = JSON.parse(importJSONString);
-                var particleJSONs = importJSON.particles;
-                universeController.reset();
-                var particles = particleJSONs.map(function(particleJSON) {
-                    var position = Vector(particleJSON.position.x, particleJSON.position.y);
-                    var velocity = Vector(particleJSON.velocity.x, particleJSON.velocity.y);
-                    universeController.addParticle(position, velocity, particleJSON.mass);
-                });
+        import: function(particlesJSONArray) {
+            if(particlesJSONArray==undefined) {
+                var importJSONString = window.prompt("Import: Ctrl+V, Enter", '[paste your configuration here]');
+                try {
+                    var importJSON = JSON.parse(importJSONString);
+                    particlesJSONArray = importJSON.particles;
+                }
+                catch(e) {
+                    alert('There was a problem importing the configuration you specified: '+e.toString());
+                    return;
+                }
             }
-            catch(e) {
-                alert('There was a problem importing the configuration you specified: '+e.toString());
-            }
+            universeController.reset();
+            var particles = particlesJSONArray.map(function(particleJSON) {
+                var position = Vector(particleJSON.position.x, particleJSON.position.y);
+                var velocity = Vector(particleJSON.velocity.x, particleJSON.velocity.y);
+                universeController.addParticle(position, velocity, particleJSON.mass);
+            });
         },
         getExportJSON: function() {
             return {
@@ -45,8 +48,24 @@ function ImportExportController(keyboard, logger, universe, universeController, 
         },
         logState: function() {
             var exportJSON = this.getExportJSON();
+            var kineticPotentialTotalEnergyTriplets = universe.particles().map(function(p) {
+                var k = p.kineticEnergy();
+                var potential = p.potentialEnergyDueToMany(universe.particlesOtherThan(p));
+                var sum = k + potential;
+                return {
+                    kineticEnergy: k,
+                    potentialEnergy: potential,
+                    totalEnergy: sum
+                };
+            });
+            var totalEnergyOfSystem = kineticPotentialTotalEnergyTriplets.fold(
+                0,
+                function(a, b) { return a + b.totalEnergy; }
+            );
+            logger.log(kineticPotentialTotalEnergyTriplets);
             logger.log(JSON.stringify(exportJSON, null, 3));
             logger.log(exportJSON);
+            logger.log('totalEnergyOfSystem = '+totalEnergyOfSystem);
         },
         processKeyPress: function(char) {
             switch(char) {

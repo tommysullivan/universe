@@ -1,7 +1,7 @@
 Array.prototype.fold = function(seed, operator) {
 	var retVal = seed;
 	this.forEach(function(item) {
-		retVal = operator(seed, item);
+		retVal = operator(retVal, item);
 	});
 	return retVal;
 }

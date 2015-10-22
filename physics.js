@@ -46,7 +46,8 @@ function Physics($, configuration) {
                         universe,
                         universeController,
                         toolbarView
-                    )
+                    ),
+                    configuration
                 );
                 universeView.render(universe);
                 applicationController.activate();
