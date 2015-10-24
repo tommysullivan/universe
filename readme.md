@@ -24,6 +24,7 @@ http://htmlpreview.github.io/?https://github.com/tommysullivan/universe/blob/mas
 2. New Design Mode Capabilities
 	1. Save and Load
 		1. ~~universe state via TextBox with copy pasted JSON (from log output) plus OK button to submit~~
+			DEFECT: larger configs cause the UI to interrupt the json string with elipsis (...)
 		2. name and save in UI (per session)
 		3. preview in the UI on hover
 		4. Google Drive
@@ -34,6 +35,7 @@ http://htmlpreview.github.io/?https://github.com/tommysullivan/universe/blob/mas
 	3. Inline configuration editor (requires paused state)
 		1. Click of particle (while in editor state) highlights it in the configuration panel
 		2. Focus in configuration editor causes highlight of particle
+		3. WIP: Add controls for each configurable element
 	4. Better gestures
 	5. Mobile Apps / Web
 		1. iPad

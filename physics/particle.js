@@ -22,9 +22,9 @@ function Particle(position, velocity, mass, configuration) {
 				position.distanceTo(otherParticle.position());
 		},
 		evolve: function(otherParticles) {
-			var newPosition = position.plus(velocity);
+			var newPosition = position.plus(velocity.times(configuration.timeStep()));
 			var accelerationDueToGravity = this.gravitationalForceDueToParticles(otherParticles).divide(mass);
-			var newVelocity = velocity.plus(accelerationDueToGravity);
+			var newVelocity = velocity.plus(accelerationDueToGravity.times(configuration.timeStep()));
 			return Particle(newPosition, newVelocity, mass, configuration);
 		},
 		gravitationalForceDueToParticles: function(otherParticles) {

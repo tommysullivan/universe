@@ -1,16 +1,25 @@
-function UniverseView(canvas, particleRenderer, $canvas, background) {
+function UniverseView(canvas, particleRenderer) {
 	return {
 		render: function(universe) {
-			canvas.width($canvas.width());
-			canvas.height($canvas.height());
-			canvas.background(background);
+			canvas.clear();
 			universe.particles().forEach(function(particle) {
 				particleRenderer.render(particle);
 			});
 		},
-		onMouseDrag: canvas.onMouseDrag.bind(canvas),
+		background: canvas.background.bind(canvas),
+		onParticleAddRequested: function(handler) {
+			canvas.onMouseDrag(function(startPosition, endPosition) {
+				var position = startPosition.divide(configuration.modelToViewSpaceFactor());
+				var velocity = endPosition.minus(startPosition).times(configuration.velocitySettingStrength());
+				handler(position, velocity);
+			});
+		},
 		position: canvas.position.bind(canvas),
-		width: canvas.width.bind(canvas),
-		height: canvas.height.bind(canvas)
+		width: function(val) {
+			canvas.width(val);
+		},
+		height: function(val) {
+			canvas.height(val);
+		}
 	}
 }

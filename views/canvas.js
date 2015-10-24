@@ -1,4 +1,5 @@
 function Canvas(canvasJQuerySelection) {
+    var background;
     function getDrawingContext() {
         return canvasJQuerySelection[0].getContext("2d");
     }
@@ -12,15 +13,18 @@ function Canvas(canvasJQuerySelection) {
         },
         clear: function() {
             getDrawingContext().clearRect(0, 0, this.width(), this.height());
+            if(background) {
+                getDrawingContext().drawImage(background,0,0, this.width(), this.height());
+            }
         },
-        background: function(background) {
-            getDrawingContext().drawImage(background,0,0, this.width(), this.height());
+        background: function(newBackground) {
+            background = newBackground;
         },
         width: function(val) {
-            return canvasJQuerySelection.attr('width', val);
+            return val ? canvasJQuerySelection.width(val) : canvasJQuerySelection.width();
         },
         height: function(val) {
-            return canvasJQuerySelection.attr('height', val);
+            return val ? canvasJQuerySelection.height(val) : canvasJQuerySelection.height();
         },
         position: function() {
             var offset = canvasJQuerySelection.offset();

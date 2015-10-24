@@ -1,140 +1,193 @@
-<html>
-	<head>
-		<title>Tommy's Universe</title>
-	    <script src="jquery.js"></script>
-	    <script src="configuration/configuration.js"></script>
-	    <script src="utils/array.js"></script>
-	    <script src="physics/vector.js"></script>
-	    <script src="physics/particle.js"></script>
-	    <script src="physics/universe.js"></script>
-	    <script src="views/massControl.js"></script>
-	    <script src="views/universeView.js"></script>
-	    <script src="views/toolbarView.js"></script>
-	    <script src="views/canvas.js"></script>
-	    <script src="views/particleRenderer.js"></script>
-	    <script src="views/keyboard.js"></script>
-	    <script src="views/logger.js"></script>
-	    <script src="controllers/applicationController.js"></script>
-	    <script src="controllers/universeController.js"></script>
-	    <script src="controllers/toolbarController.js"></script>
-		<script src="controllers/importExportController.js"></script>
-		<script src="physics.js"></script>
-	    <script type="text/javascript">
-			var configuration = Configuration({
-				"autoStart": true,
-				"initialParticles": [
-					{
-						"position": {
-							"x": 478.04298400878906,
-							"y": 447.9583435058594
-						},
-						"velocity": {
-							"x": 0,
-							"y": 0
-						},
-						"mass": 200
-					},
-					{
-						"position": {
-							"x": 826.0429840087891,
-							"y": 445.9583435058594
-						},
-						"velocity": {
-							"x": 0,
-							"y": -2.46
-						},
-						"mass": 4
-					},
-					{
-						"position": {
-							"x": 39.04298400878906,
-							"y": 411.9583435058594
-						},
-						"velocity": {
-							"x": 0.27,
-							"y": 1.96
-						},
-						"mass": 4
-					}
-				],
-				"backgroundURL": 'http://weknowyourdreams.com/images/stars/stars-02.jpg',
-				"renderIntervalInMilliseconds": 20,
-				"gravitationalConstant": 10,
-				"smallChange": 3,
-				"bigChange": 20,
-				"velocitySettingStrength": 0.01,
-				"massDensityFactor": 1,
-				"modelToViewSpaceFactor": 1,
-				"particleColor": "#FFFFFF",
-				"tinyParticleColor": "#333333",
-				"massTextInputSelector": "#mass",
-				"resetButtonSelector": "#resetButton",
-				"startStopToggleSelector": "#startStopToggle",
-				"universeCanvasSelector": "#universe",
-				"timestepButtonSelector": "#timestepButton",
-				"logButtonSelector": "#logButton",
-				"exportButtonSelector": "#exportButton",
-				"importButtonSelector": "#importButton",
-				"keyboardShortcutSelector": "body",
-				"universeContainerJQuerySelection": "#universeContainer"
-			});
-	    	$(function() {
-				Physics($, configuration).startApplication();
-			});
-	    </script>
-	    <style>
-			body {
-				font-size: 16px;
-			}
-	    	button {
-				font-size: 16px;
-				padding: 10px;
-				margin: 5px;
-	    	}
-			#controls {
-				padding: 5px;
-				background-color: gray
-			}
-			#universe {
-				cursor: crosshair
-			}
-			#application {
-				padding: 15px;
-				background-color: lightgray;
-				border-radius: 10px;
-			}
-			#title {
-				margin-bottom: 5px;
-				font-family: fantasy;
-				font-size: 30px;
-			}
-			input {
-				width: 30px;
-			}
-	    </style>
-	</head>
-	<body>
-		<div id="application">
-			<div id="title">Tommy's Universe Emulator</div>
-			<div id="controls">
-				<button id="startStopToggle">(S)tart</button>
-				<button id="resetButton">(R)eset</button>
-				<button id="timestepButton">(T)imestep</button>
-				<button id="logButton">(L)og State</button>
-				<button id="exportButton">e(X)port</button>
-				<button id="importButton">(I)mport</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A javascript physics emulator">
+    <meta name="author" content="Tommy Sullivan">
 
-				<label>mass: <input type="text" id="mass" value="10" /></label>
-				<label>velocity: <input type="text" id="velocity" value="10" /></label>
-				<label>fps: <input type="text" id="fps" value="10" /></label>
-				<label>gravity: <input type="text" id="gravity" value="10" /></label>
-				<label>massDensity: <input type="text" id="massDensity" value="10" /></label>
-				<strong>shortcuts:</strong>
-					<strong>(-/+)</strong> change mass (hold shift for larger increment)
-			</div>
-			<div id="universeContainer" width="100%", height="1000" style="background-color: black; padding: 20px;">
-				<canvas id="universe" style="background-color: #002222;" width="2000" height="1000"></canvas>
-			</div>
-		</div>
-	</body>
+    <title>Tommy's Universe</title>
+    <script src="jquery.js"></script>
+    <script src="configuration/configuration.js"></script>
+    <script src="utils/array.js"></script>
+    <script src="physics/vector.js"></script>
+    <script src="physics/particle.js"></script>
+    <script src="physics/universe.js"></script>
+    <script src="views/massControl.js"></script>
+    <script src="views/universeView.js"></script>
+    <script src="views/toolbarView.js"></script>
+    <script src="views/canvas.js"></script>
+    <script src="views/particleRenderer.js"></script>
+    <script src="views/keyboard.js"></script>
+    <script src="views/logger.js"></script>
+    <script src="controllers/applicationController.js"></script>
+    <script src="controllers/universeController.js"></script>
+    <script src="controllers/toolbarController.js"></script>
+    <script src="controllers/importExportController.js"></script>
+    <script src="physics.js"></script>
+    <script type="text/javascript">
+        var configuration = Configuration({
+            "autoStart": true,
+            "initialParticles": [
+                {
+                    "position": {
+                        "x": 250,
+                        "y": 250
+                    },
+                    "velocity": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "mass": 100
+                },
+                {
+                    "position": {
+                        "x": 600,
+                        "y": 450
+                    },
+                    "velocity": {
+                        "x": 0,
+                        "y": -1
+                    },
+                    "mass": 4
+                },
+                {
+                    "position": {
+                        "x": 50,
+                        "y": 200
+                    },
+                    "velocity": {
+                        "x": 0.25,
+                        "y": 2
+                    },
+                    "mass": 4
+                }
+            ],
+            "timeStep": 0.2,
+            "backgroundURL": "http://weknowyourdreams.com/images/stars/stars-02.jpg",
+            "renderIntervalInMilliseconds": 20,
+            "gravitationalConstant": 20,
+            "smallChange": 3,
+            "bigChange": 20,
+            "velocitySettingStrength": 0.01,
+            "massDensityFactor": 1,
+            "modelToViewSpaceFactor": 1,
+            "particleColor": "white",
+            "tinyParticleColor": "lightgray",
+            "massTextInputSelector": "#mass",
+            "resetButtonSelector": "#resetButton",
+            "startStopToggleSelector": "#startStopToggle",
+            "universeCanvasSelector": "#universe",
+            "timestepButtonSelector": "#timestepButton",
+            "logButtonSelector": "#logButton",
+            "exportButtonSelector": "#exportButton",
+            "importButtonSelector": "#importButton",
+            "keyboardShortcutSelector": "body",
+            "universeContainerSelector": "#universeContainer"
+        });
+        $(function() {
+            Physics($, configuration).startApplication();
+        });
+    </script>
+    <style>
+        body {
+            font-size: 16px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 5px;
+        }
+        #controls {
+            padding: 5px;
+        }
+        #universe {
+            cursor: crosshair;
+        }
+        #particleControls, #universeControls, #viewOptions {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: gray;
+            margin-bottom: 15px;
+        }
+        #sideMenu {
+            background-color: lightgray;
+        }
+        input {
+            width: 30px;
+        }
+    </style>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Tommy's Universe</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <div id="controls">
+                <button id="startStopToggle">(S)tart</button>
+                <button id="resetButton">(R)eset</button>
+                <button id="timestepButton">(T)imestep</button>
+                <button id="logButton">(L)og State</button>
+                <button id="exportButton">e(X)port</button>
+                <button id="importButton">(I)mport</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Universe Simulator</h3>
+            <div id="universeContainer" width="100%", height="1000" style="background-color: black; padding: 20px;">
+                <canvas id="universe" style="background-color: #002222;" width="700" height="500"></canvas>
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-top: 25px;" id="sideMenu">
+            <h3>Design Controls</h3>
+            <h6>Particle</h6>
+            <div id="particleControls">
+                <label>mass: <input type="text" id="mass" value="10" /></label><br />
+                <label>velocity: <input type="text" id="velocity" value="10" disabled="disabled" /></label><br />
+                <label>gesture velocity: <input id="shouldUseGestureVelocity" type="checkbox" checked="checked" disabled="disabled" /></label><br />
+            </div>
+            <h6>Universe Physics</h6>
+            <div id="universeControls">
+                <label>timestep: <input type="text" id="fps" value="10" disabled="disabled" /></label><br />
+                <label>gravitational constant: <input type="text" id="gravity" value="10" disabled="disabled" /></label><br />
+            </div>
+            <h6>View Options</h6>
+            <div id="viewOptions">
+                <label>fps: <input type="text" id="fps" value="60" disabled="disabled" /></label><br />
+                <label>tracePaths: <input id="shouldTracePaths" type="checkbox" checked="checked" disabled="disabled" /></label><br />
+                <label>mass depiction: <input type="text" id="massDensity" value="10" disabled="disabled" /></label><br />
+                <label>background url: <input type="text" id="backgroundURL" value="10" disabled="disabled" /></label><br />
+                <label>particle color: <input type="text" id="particleColor" value="10" disabled="disabled" /></label><br />
+                <label>tiny particle color: <input type="text" id="tinyParticleColor" value="10" disabled="disabled" /></label><br />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <footer>
+        <p>&copy;2015 Tommy Sullivan | All Rights Reserved</p>
+    </footer>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
 </html>

@@ -11,7 +11,7 @@ Configuration = function(configurationJSON) {
 	}
 	return {
 		backgroundURL: jsonAccessorMethod('backgroundURL'),
-		universeContainerJQuerySelection: jsonAccessorMethod('universeContainerJQuerySelection'),
+		universeContainerSelector: jsonAccessorMethod('universeContainerSelector'),
 		velocitySettingStrength: jsonAccessorMethod('velocitySettingStrength'),
 		renderIntervalInMilliseconds: jsonAccessorMethod('renderIntervalInMilliseconds'),
 		gravitationalConstant: jsonAccessorMethod('gravitationalConstant'),
@@ -31,6 +31,7 @@ Configuration = function(configurationJSON) {
 		exportButtonSelector: jsonAccessorMethod('exportButtonSelector'),
 		importButtonSelector: jsonAccessorMethod('importButtonSelector'),
 		autoStart: jsonAccessorMethod('autoStart'),
-		initialParticles: jsonAccessorMethod('initialParticles')
+		initialParticles: jsonAccessorMethod('initialParticles'),
+		timeStep: jsonAccessorMethod('timeStep')
 	}
 }

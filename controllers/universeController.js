@@ -1,4 +1,4 @@
-function UniverseController(universeView, universe, particleRenderer, configuration, massControl) {
+function UniverseController(universeView, universe, particleRenderer, configuration, massControl, $universeContainer) {
     var interval;
     return {
         reset: function() {
@@ -21,14 +21,19 @@ function UniverseController(universeView, universe, particleRenderer, configurat
         },
         activate: function() {
             var _this = this;
-            universeView.onMouseDrag(function(startPosition, endPosition) {
-                var position = startPosition.divide(configuration.modelToViewSpaceFactor());
-                var velocity = endPosition.minus(startPosition).times(configuration.velocitySettingStrength());
+            universeView.onParticleAddRequested(function(startPosition, velocity) {
                 _this.addParticle(startPosition, velocity, massControl.getMass());
             });
-            window.addEventListener("resize", function() {
-                universeView.render(universe);
-            });
+            var background = new Image();
+            background.src = configuration.backgroundURL();
+            background.onload = function() {
+                universeView.background(background);
+            }
+            _this.resizeCanvas();
+            window.addEventListener("resize", this.resizeCanvas.bind(this));
+        },
+        resizeCanvas: function() {
+            universeView.width($universeContainer.width());
         },
         addParticle: function(position, velocity, mass) {
             var particle = Particle(
