@@ -39,7 +39,8 @@
                         "x": 0,
                         "y": 0
                     },
-                    "mass": 100
+                    "mass": 100,
+                    "charge": 0
                 },
                 {
                     "position": {
@@ -50,7 +51,8 @@
                         "x": 0,
                         "y": -1
                     },
-                    "mass": 4
+                    "mass": 4,
+                    "charge": 1
                 },
                 {
                     "position": {
@@ -61,7 +63,8 @@
                         "x": 0.25,
                         "y": 2
                     },
-                    "mass": 4
+                    "mass": 4,
+                    "charge": -1
                 }
             ],
             "timeStep": 0.2,
@@ -84,7 +87,11 @@
             "exportButtonSelector": "#exportButton",
             "importButtonSelector": "#importButton",
             "keyboardShortcutSelector": "body",
-            "universeContainerSelector": "#universeContainer"
+            "universeContainerSelector": "#universeContainer",
+            "electrostaticConstant": 10000,
+            "negativeColor": "blue",
+            "positiveColor": "red",
+            "chargeTextInputSelector": "#charge"
         });
         $(function() {
             Physics($, configuration).startApplication();
@@ -165,6 +172,7 @@
                 <label>mass: <input type="text" id="mass" value="10" /></label><br />
                 <label>velocity: <input type="text" id="velocity" value="10" disabled="disabled" /></label><br />
                 <label>gesture velocity: <input id="shouldUseGestureVelocity" type="checkbox" checked="checked" disabled="disabled" /></label><br />
+                <label>charge: <input id="charge" type="text" value="0" /></label><br />
             </div>
             <h6>Universe Physics</h6>
             <div id="universeControls">

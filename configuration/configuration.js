@@ -32,6 +32,10 @@ Configuration = function(configurationJSON) {
 		importButtonSelector: jsonAccessorMethod('importButtonSelector'),
 		autoStart: jsonAccessorMethod('autoStart'),
 		initialParticles: jsonAccessorMethod('initialParticles'),
-		timeStep: jsonAccessorMethod('timeStep')
+		timeStep: jsonAccessorMethod('timeStep'),
+		electrostaticConstant: jsonAccessorMethod('electrostaticConstant'),
+		positiveColor: jsonAccessorMethod('positiveColor'),
+		negativeColor: jsonAccessorMethod('negativeColor'),
+		chargeTextInputSelector: jsonAccessorMethod('chargeTextInputSelector')
 	}
 }

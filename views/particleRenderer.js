@@ -7,7 +7,12 @@ function ParticleRenderer(configuration, canvas) {
                 color = configuration.tinyParticleColor();
             }
             var drawPosition = particle.position().times(configuration.modelToViewSpaceFactor());
-            var color = configuration.particleColor();
+            var charge = particle.charge();
+            var color = charge < 0
+                ? configuration.negativeColor()
+                : charge > 0
+                    ? configuration.positiveColor()
+                    : configuration.particleColor();
             canvas.drawCircle(drawPosition, radius, color);
         }
     }

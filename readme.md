@@ -13,14 +13,13 @@ http://htmlpreview.github.io/?https://github.com/tommysullivan/universe/blob/mas
 
 ## Coming Features
 
-1. New Phyics Capabilities
+1. New Physics Capabilities
 	1. 3D Physics
-	2. Add electrostatic force
-	3. Add electromagnetic force
-	4. Add weak force
-	5. Add strong force
-	6. Add relativity
-	7. Add quantum physics
+    2. Add electromagnetic force
+	3. Add weak force
+	4. Add strong force
+	5. Add relativity
+	6. Add quantum physics
 2. New Design Mode Capabilities
 	1. Save and Load
 		1. ~~universe state via TextBox with copy pasted JSON (from log output) plus OK button to submit~~

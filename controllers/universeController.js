@@ -22,7 +22,8 @@ function UniverseController(universeView, universe, particleRenderer, configurat
         activate: function() {
             var _this = this;
             universeView.onParticleAddRequested(function(startPosition, velocity) {
-                _this.addParticle(startPosition, velocity, massControl.getMass());
+                var charge = parseInt($(configuration.chargeTextInputSelector()).val());
+                _this.addParticle(startPosition, velocity, massControl.getMass(), charge);
             });
             var background = new Image();
             background.src = configuration.backgroundURL();
@@ -35,12 +36,13 @@ function UniverseController(universeView, universe, particleRenderer, configurat
         resizeCanvas: function() {
             universeView.width($universeContainer.width());
         },
-        addParticle: function(position, velocity, mass) {
+        addParticle: function(position, velocity, mass, charge) {
             var particle = Particle(
                 position,
                 velocity,
                 mass,
-                configuration
+                configuration,
+                charge
             );
             universe.addParticle(particle);
             particleRenderer.render(particle);

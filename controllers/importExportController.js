@@ -20,7 +20,7 @@ function ImportExportController(keyboard, logger, universe, universeController, 
             var particles = particlesJSONArray.map(function(particleJSON) {
                 var position = Vector(particleJSON.position.x, particleJSON.position.y);
                 var velocity = Vector(particleJSON.velocity.x, particleJSON.velocity.y);
-                universeController.addParticle(position, velocity, particleJSON.mass);
+                universeController.addParticle(position, velocity, particleJSON.mass, particleJSON.charge);
             });
         },
         getExportJSON: function() {
@@ -35,7 +35,8 @@ function ImportExportController(keyboard, logger, universe, universeController, 
                             x: p.velocity().x(),
                             y: p.velocity().y()
                         },
-                        mass: p.mass()
+                        mass: p.mass(),
+                        charge: p.charge()
                     }
                 })
             };
