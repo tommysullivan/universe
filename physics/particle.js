@@ -33,32 +33,26 @@ function Particle(position, velocity, mass, configuration, charge) {
 			return Particle(newPosition, newVelocity, mass, configuration, charge);
 		},
 		electrostaticForceDueToParticles: function(otherParticles) {
-			var gravitationalForceDueToParticles = otherParticles.map(this.electrostaticForceDueTo.bind(this));
-			return gravitationalForceDueToParticles.fold(
-				Vector(0, 0),
-				function(a, b) { return a.plus(b); }
-			);
+			return Vector.sum(otherParticles.map(this.electrostaticForceDueTo.bind(this)));
 		},
 		gravitationalForceDueToParticles: function(otherParticles) {
-			var gravitationalForceDueToParticles = otherParticles.map(this.gravitationalForceDueTo.bind(this));
-			return gravitationalForceDueToParticles.fold(
-				Vector(0, 0),
-				function(a, b) { return a.plus(b); }
-			);
+			return Vector.sum(otherParticles.map(this.gravitationalForceDueTo.bind(this)));
 		},
 		electrostaticForceDueTo: function(otherParticle) {
-			var distanceBetweenParticles = position.distanceTo(otherParticle.position());
-			var magnitude = configuration.electrostaticConstant() * charge * otherParticle.charge()
-				/
-				(distanceBetweenParticles * distanceBetweenParticles);
-			var unitVector = position.unitVectorPointingAt(otherParticle.position());
-			return unitVector.times(magnitude);
+			return this.fieldQuotient(otherParticle).times(
+				configuration.electrostaticConstant() * this.charge() * otherParticle.charge()
+			);
 		},
 		gravitationalForceDueTo: function(otherParticle) {
-			var potentialEnergy = this.potentialEnergyDueTo(otherParticle);
-			var magnitude = potentialEnergy / position.distanceTo(otherParticle.position());
-			var unitVector = position.unitVectorPointingAt(otherParticle.position());
-			return unitVector.times(magnitude);
+			return this.fieldQuotient(otherParticle).times(
+				-1 * configuration.gravitationalConstant() * this.mass() * otherParticle.mass()
+			);
+		},
+		fieldQuotient: function(otherParticle) {
+			var distanceBetweenParticles = position.distanceTo(otherParticle.position());
+			return position.unitVectorPointingAt(otherParticle.position())
+				.divide
+				(distanceBetweenParticles * distanceBetweenParticles);
 		}
 	}
 }

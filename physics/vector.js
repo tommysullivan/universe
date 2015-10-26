@@ -32,3 +32,11 @@ function Vector(x, y) {
 		}
 	}
 }
+
+var ZeroVector = Vector(0, 0);
+Vector.sum = function(vectors) {
+	return vectors.fold(
+		ZeroVector,
+		function(a, b) { return a.plus(b); }
+	);
+}
