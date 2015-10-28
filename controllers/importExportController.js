@@ -2,22 +2,22 @@ function ImportExportController(keyboard, logger, universe, universeController, 
     return {
         export: function() {
             var exportJSONString = JSON.stringify(this.getExportJSON(), null, 3);
-            window.prompt("Copy to clipboard: Ctrl+C, Enter", exportJSONString);
+            var blob = new Blob([exportJSONString], {type: "application/json;charset=utf-8"});
+            saveAs(blob, "universe.json");
         },
-        import: function(particlesJSONArray) {
-            if(particlesJSONArray==undefined) {
-                var importJSONString = window.prompt("Import: Ctrl+V, Enter", '[paste your configuration here]');
-                try {
-                    var importJSON = JSON.parse(importJSONString);
-                    particlesJSONArray = importJSON.particles;
-                }
-                catch(e) {
-                    alert('There was a problem importing the configuration you specified: '+e.toString());
-                    return;
-                }
-            }
+        importFile: function(fileSelectedEvent) {
+            var reader = new FileReader();
+            var _this = this;
+            reader.onload = function(fileLoadedEvent) {
+                var universeJSONString = fileLoadedEvent.target.result;
+                var universeJSON = JSON.parse(universeJSONString);
+                _this.import(universeJSON.particles);
+            };
+            reader.readAsText(fileSelectedEvent.target.files[0]);
+        },
+        import: function(particlesJSON) {
             universeController.reset();
-            var particles = particlesJSONArray.map(function(particleJSON) {
+            var particles = particlesJSON.map(function(particleJSON) {
                 var position = Vector(particleJSON.position.x, particleJSON.position.y);
                 var velocity = Vector(particleJSON.velocity.x, particleJSON.velocity.y);
                 universeController.addParticle(position, velocity, particleJSON.mass, particleJSON.charge);
@@ -45,7 +45,7 @@ function ImportExportController(keyboard, logger, universe, universeController, 
             keyboard.onKeyPress(this.processKeyPress.bind(this));
             toolbarView.onLogButtonClick(this.logState.bind(this));
             toolbarView.onExportButtonClick(this.export.bind(this));
-            toolbarView.onImportButtonClick(this.import.bind(this));
+            toolbarView.onImportFileChosen(this.importFile.bind(this));
         },
         logState: function() {
             var exportJSON = this.getExportJSON();
@@ -72,7 +72,7 @@ function ImportExportController(keyboard, logger, universe, universeController, 
             switch(char) {
                 case 'l': this.logState(); break;
                 case 'x': this.export(); break;
-                case 'i': this.import(); break;
+                case 'i': toolbarView.triggerImportFileButtonClick(); break;
             }
         }
     }

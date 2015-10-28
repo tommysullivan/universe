@@ -22,9 +22,8 @@ http://htmlpreview.github.io/?https://github.com/tommysullivan/universe/blob/mas
 	6. Add quantum physics
 2. New Design Mode Capabilities
 	1. Save and Load
-		1. ~~universe state via TextBox with copy pasted JSON (from log output) plus OK button to submit~~
-			DEFECT: larger configs cause the UI to interrupt the json string with elipsis (...)
-		2. name and save in UI (per session)
+		1. ~~save and load from hard drive~~
+		2. quicksave in UI (as new convenient button - does not persist after refresh!)
 		3. preview in the UI on hover
 		4. Google Drive
 		5. Search / Discover Shared by others, including software maker

@@ -8,7 +8,8 @@
     <meta name="author" content="Tommy Sullivan">
 
     <title>Tommy's Universe</title>
-    <script src="jquery.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/FileSaver.js"></script>
     <script src="configuration/configuration.js"></script>
     <script src="utils/array.js"></script>
     <script src="physics/vector.js"></script>
@@ -101,11 +102,6 @@
         body {
             font-size: 16px;
         }
-        button {
-            font-size: 16px;
-            padding: 10px;
-            margin: 5px;
-        }
         #controls {
             padding: 5px;
         }
@@ -115,14 +111,30 @@
         #particleControls, #universeControls, #viewOptions {
             margin-top: 15px;
             padding: 15px;
-            background-color: gray;
+            background-color: #7799BB;
             margin-bottom: 15px;
         }
         #sideMenu {
-            background-color: lightgray;
+            background-color: #88BBDD;
         }
-        input {
-            width: 30px;
+        /*input {*/
+            /*width: 30px;*/
+        /*}*/
+        .fileUpload {
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+        }
+        .fileUpload input.upload {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
         }
     </style>
 
@@ -147,12 +159,15 @@
         </div>
         <div class="navbar-collapse collapse">
             <div id="controls">
-                <button id="startStopToggle">(S)tart</button>
-                <button id="resetButton">(R)eset</button>
-                <button id="timestepButton">(T)imestep</button>
-                <button id="logButton">(L)og State</button>
-                <button id="exportButton">e(X)port</button>
-                <button id="importButton">(I)mport</button>
+                <button id="startStopToggle" class="btn btn-primary">(S)tart</button>
+                <button id="resetButton" class="btn btn-primary">(R)eset</button>
+                <button id="timestepButton" class="btn btn-primary">(T)imestep</button>
+                <button id="logButton" class="btn btn-primary">(L)og State</button>
+                <button id="exportButton" class="btn btn-primary">e(X)port</button>
+                <div class="fileUpload btn btn-primary" style="margin: 0px;">
+                    <span>(I)mport</span>
+                    <input type="file" id="importButton" class="upload" />
+                </div>
             </div>
         </div>
     </div>

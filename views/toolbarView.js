@@ -11,6 +11,14 @@ function ToolbarView($resetButton, $startStopToggle, $timestepButton, $logButton
 		onTimestepButtonClick: bindClick($timestepButton),
 		onLogButtonClick: bindClick($logButton),
 		onExportButtonClick: bindClick($exportButton),
-		onImportButtonClick: bindClick($importButton)
+		onImportFileChosen: function(handler) {
+			$importButton.change(function() {
+				handler.apply(this, arguments);
+				$importButton.val(null);
+			});
+		},
+		triggerImportFileButtonClick: function() {
+			$importButton.click();
+		}
 	}
 }
