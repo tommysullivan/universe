@@ -3,6 +3,7 @@ function UniverseController(universeView, universe, particleRenderer, configurat
     return {
         reset: function() {
             universe.reset();
+            universeView.resetCamera();
             universeView.render(universe);
         },
         isRunning: function() {
@@ -53,6 +54,8 @@ function UniverseController(universeView, universe, particleRenderer, configurat
             var x = k == Keyboard.RIGHT ? d : k == Keyboard.LEFT ? (-1 * d) : 0;
             var y = k == Keyboard.DOWN ? d : k == Keyboard.UP ? (-1 * d) : 0;
             universeView.moveCamera(Vector(x, y));
-        }
+        },
+        zoomOut: universeView.zoomOut.bind(universeView),
+        zoomIn: universeView.zoomIn.bind(universeView)
     }
 }

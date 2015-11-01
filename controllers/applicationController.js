@@ -20,6 +20,8 @@ function ApplicationController(universeController, toolbarController, importExpo
 				case '+': toolbarController.changeMass(configuration.bigChange()); break;
 				case 'r': universeController.reset(); break;
 				case 't': universeController.updateAndRender(); break;
+				case '<': universeController.zoomOut(); break;
+				case '>': universeController.zoomIn(); break;
 			}
 		}
 	}
