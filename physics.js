@@ -31,7 +31,6 @@ function Physics($, configuration) {
             var applicationController = ApplicationController(
                 universeController,
                 ToolbarController(
-                    keyboard,
                     massControl,
                     toolbarView,
                     universeController
@@ -43,7 +42,8 @@ function Physics($, configuration) {
                     universeController,
                     toolbarView
                 ),
-                configuration
+                configuration,
+                keyboard
             );
             applicationController.activate();
         }

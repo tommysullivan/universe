@@ -45,7 +45,14 @@ function UniverseController(universeView, universe, particleRenderer, configurat
                 charge
             );
             universe.addParticle(particle);
-            particleRenderer.render(particle);
+            universeView.render(universe);
+        },
+        processArrowKey: function(event) {
+            var d = event.shiftKey ? 10 : 1;
+            var k = event.keyCode;
+            var x = k == Keyboard.RIGHT ? d : k == Keyboard.LEFT ? (-1 * d) : 0;
+            var y = k == Keyboard.DOWN ? d : k == Keyboard.UP ? (-1 * d) : 0;
+            universeView.moveCamera(Vector(x, y));
         }
     }
 }
